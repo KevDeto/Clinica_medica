@@ -1,5 +1,6 @@
 package clinica.model.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import jakarta.persistence.GeneratedValue;
@@ -16,14 +17,14 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @MappedSuperclass
-public class Persona {
+public class Persona implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_paciente;
+	private Long id;
 	private String nombre;
 	private String apellido;
 	private String dni;
-	private LocalDate fehca_nac;
+	private LocalDate fecha_nac;
 	private String email;
 	private String telefono;
 	private String direccion;
