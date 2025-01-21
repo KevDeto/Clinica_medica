@@ -9,6 +9,6 @@ public interface IPacienteService {
 	PacienteDTO obtenerPaciente(Long id);
 	PacienteDTO actualizarPaciente(Long id, PacienteDTO pacienteDTO);
 	void eliminarPaciente(Long id);
-	boolean eliminarPacientePorId(Long id);
+	boolean existePacientePorId(Long id);
 	List<PacienteDTO> listarPacientes();
 }
