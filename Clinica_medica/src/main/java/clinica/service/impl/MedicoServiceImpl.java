@@ -3,6 +3,8 @@ package clinica.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.mapper.Mapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -56,14 +58,31 @@ public class MedicoServiceImpl implements IMedicoService {
 
 	@Override
 	public MedicoDTO actualizarMedico(Long id, MedicoDTO medicoDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	    Medico medico = medicoRepository.findById(id)
+	            .orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
+	                    "Medico con ID " + id + " no encontrado.", null));
+		try {
+			medicoDTO.setId(id);
+			IMedicoMapper.INSTANCE.actualizarMedicoDesdeDTO(medico, medicoDTO);
+			medicoRepository.save(medico);
+			MedicoDTO mapperMedicoDTO = IMedicoMapper.INSTANCE.deMedicoAMedicoDTO(medico);
+			return mapperMedicoDTO;
+	    } catch (DataIntegrityViolationException ex) {
+	        throw new ApplicationException(ErrorCode.CONFLICT, 
+	                "Error de integridad de datos: existen duplicados.", ex);
+		} catch (Exception ex) {
+	        throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR, 
+	                "Error interno del servidor.", ex);
+	    }
 	}
 
 	@Override
 	public void eliminarMedico(Long id) {
-		// TODO Auto-generated method stub
-
+		if(!medicoRepository.existsById(id)) {
+			throw new ApplicationException(ErrorCode.NOT_FOUND,
+					"Paciente con ID " + id + " no existe.", null);
+		}
+		medicoRepository.deleteById(id);
 	}
 
 	@Override
@@ -74,8 +93,10 @@ public class MedicoServiceImpl implements IMedicoService {
 
 	@Override
 	public List<MedicoDTO> listarMedicos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Medico> listaMedicos = medicoRepository.findAll();
+		List<MedicoDTO> mapperListaMedicosDTO = IMedicoMapper.INSTANCE
+				.deListaMedicoAListaMedicoDTO(listaMedicos);
+		return mapperListaMedicosDTO;
 	}
 
 }

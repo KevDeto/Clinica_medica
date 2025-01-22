@@ -59,14 +59,32 @@ public class PacienteServiceImpl implements IPacienteService{
 
 	@Override
 	public PacienteDTO actualizarPaciente(Long id, PacienteDTO pacienteDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		Paciente paciente = pacienteRepository.findById(id)
+				.orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
+						"Paciente con ID " + id + " no existe.", null));
+		
+		try {
+			pacienteDTO.setId(id);
+			IPacienteMapper.INSTANCE.actualizarPacienteDesdeDTO(paciente, pacienteDTO);
+			pacienteRepository.save(paciente);
+			PacienteDTO mapperPacienteDTO = IPacienteMapper.INSTANCE.dePacienteAPacienteDTO(paciente);
+			return mapperPacienteDTO;
+		} catch (DataIntegrityViolationException ex) {
+	        throw new ApplicationException(ErrorCode.CONFLICT, 
+	                "Error de integridad de datos: existen duplicados.", ex);
+	    } catch (Exception ex) {
+	        throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR, 
+	                "Error interno del servidor.", ex);
+		}
 	}
 
 	@Override
 	public void eliminarPaciente(Long id) {
-		// TODO Auto-generated method stub
-		
+		if(!pacienteRepository.existsById(id)) {
+			throw new ApplicationException(ErrorCode.NOT_FOUND,
+					"Paciente con ID " + id + " no existe.", null);
+		}
+		pacienteRepository.deleteById(id);
 	}
 
 	@Override
@@ -77,8 +95,10 @@ public class PacienteServiceImpl implements IPacienteService{
 
 	@Override
 	public List<PacienteDTO> listarPacientes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Paciente> listaPaciente = pacienteRepository.findAll();
+		List<PacienteDTO> mapperPacientesDTO = IPacienteMapper.INSTANCE
+				.deListaPacienteAListaPacienteDTO(listaPaciente);
+		return mapperPacientesDTO;
 	}
 
 }
