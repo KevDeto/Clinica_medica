@@ -1,6 +1,7 @@
 package clinica.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,15 @@ public class MedicoServiceImpl implements IMedicoService {
 
 	@Override
 	public MedicoDTO obtenerMedico(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Medico> medicoObtenido = medicoRepository.findById(id);
+		
+		if(medicoObtenido.isEmpty()) {
+			throw new RuntimeException("Paciente con ID " + id + " no encontrado.");
+		}
+		Medico medico = medicoObtenido.get();
+		MedicoDTO mapperMedicoDTO = IMedicoMapper.INSTANCE.deMedicoAMedicoDTO(medico);
+		
+		return mapperMedicoDTO;
 	}
 
 	@Override
