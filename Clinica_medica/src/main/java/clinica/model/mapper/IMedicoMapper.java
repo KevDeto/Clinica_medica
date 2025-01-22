@@ -3,6 +3,7 @@ package clinica.model.mapper;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import clinica.model.dto.MedicoDTO;
@@ -15,4 +16,5 @@ public interface IMedicoMapper {
 	Medico deMedicoDTOAMedico(MedicoDTO medicoDTO);
 	List<MedicoDTO> deListaMedicoAListaMedicoDTO(List<Medico> listaMedico);
 	List<Medico> deListaMedicoDTOAListaMedico(List<MedicoDTO> listaMedicoDTO);
+	void actualizarMedicoDesdeDTO(@MappingTarget Medico medico, MedicoDTO medicoDTO);
 }
