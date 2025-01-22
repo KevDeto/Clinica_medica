@@ -29,32 +29,32 @@ public class MedicoController {
 	
 	@PostMapping("/medico")
 	public ResponseEntity<MensajeResponse> crear(@Valid@RequestBody MedicoDTO medicoDTO){
-		try {
+//		try {
 			MedicoDTO medicoCreado = medicoService.crearMedico(medicoDTO);
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(MensajeResponse.builder()
 							.mensaje("Medico creado correctamente.")
 							.objeto(medicoCreado)
 							.build());
-		} catch (DataAccessException e) {
-        	return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
-        			.body(MensajeResponse.builder()
-        					.mensaje("Error al crear medico: " + e.getMessage())
-        					.objeto(null)
-        					.build());
-		}
+//		} catch (DataAccessException e) {
+//        	return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+//        			.body(MensajeResponse.builder()
+//        					.mensaje("Error al crear medico: " + e.getMessage())
+//        					.objeto(null)
+//        					.build());
+//		}
 	}
 	
 	@GetMapping("/medico/{id}")
 	public ResponseEntity<MensajeResponse> obtener(@Valid@PathVariable Long id){
 		MedicoDTO medicoObtenido = medicoService.obtenerMedico(id);
-		if(medicoObtenido == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(MensajeResponse.builder()
-							.mensaje("Medico con ID " + id + " no encontrado.")
-							.objeto(null)
-							.build());
-		}
+//		if(medicoObtenido == null) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//					.body(MensajeResponse.builder()
+//							.mensaje("Medico con ID " + id + " no encontrado.")
+//							.objeto(null)
+//							.build());
+//		}
 		return ResponseEntity.ok(MensajeResponse.builder()
 				.mensaje("Medico recuperado correctamente.")
 				.objeto(medicoObtenido)
@@ -64,60 +64,60 @@ public class MedicoController {
 	@PutMapping("/medico/{id}")
 	public ResponseEntity<MensajeResponse> actualizar(@Valid@PathVariable Long id,
 			@Valid@RequestBody MedicoDTO medicoDTO){
-		if(!medicoService.existeMedicoPorId(id)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(MensajeResponse.builder()
-							.mensaje("Medico con ID " + id + " no encontrado.")
-							.objeto(null)
-							.build());
-		}
-		try {
+//		if(!medicoService.existeMedicoPorId(id)) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//					.body(MensajeResponse.builder()
+//							.mensaje("Medico con ID " + id + " no encontrado.")
+//							.objeto(null)
+//							.build());
+//		}
+//		try {
 			medicoDTO.setId(id); //esto deberia estar aca o en el service ?
 			MedicoDTO medicoActualizado = medicoService.actualizarMedico(id, medicoDTO);
 			return ResponseEntity.ok(MensajeResponse.builder()
 					.mensaje("Medico modificado correctamente.")
 					.objeto(medicoActualizado)
 					.build());
-		} catch (DataAccessException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(MensajeResponse.builder()
-							.mensaje("Error al modificar medico: " + e.getMessage())
-							.objeto(null)
-							.build());
-		}
+//		} catch (DataAccessException e) {
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//					.body(MensajeResponse.builder()
+//							.mensaje("Error al modificar medico: " + e.getMessage())
+//							.objeto(null)
+//							.build());
+//		}
 	}
 	
 	@DeleteMapping("/medico/{id}")
 	public ResponseEntity<MensajeResponse> eliminar(@Valid@PathVariable Long id){
-		if(!medicoService.existeMedicoPorId(id)) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(MensajeResponse.builder()
-							.mensaje("Medico con ID " + id + " no encontrado." )
-							.objeto(null)
-							.build());
-		}
-		try {
+//		if(!medicoService.existeMedicoPorId(id)) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//					.body(MensajeResponse.builder()
+//							.mensaje("Medico con ID " + id + " no encontrado." )
+//							.objeto(null)
+//							.build());
+//		}
+//		try {
 			medicoService.eliminarMedico(id);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
-					.body(MensajeResponse.builder()
-							.mensaje("Error al eliminar medico: " + e.getMessage())
-							.objeto(null)
-							.build());
-		}
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+//					.body(MensajeResponse.builder()
+//							.mensaje("Error al eliminar medico: " + e.getMessage())
+//							.objeto(null)
+//							.build());
+//		}
 	}
 	
 	@GetMapping("/medicos")
 	public ResponseEntity<MensajeResponse> obtenerTodos() {
 		List<MedicoDTO> listaMedicos = medicoService.listarMedicos();
-		if(listaMedicos.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT)
-					.body(MensajeResponse.builder()
-							.mensaje("No se han encontrado registros.")
-							.objeto(listaMedicos)
-							.build());
-		}
+//		if(listaMedicos.isEmpty()) {
+//			return ResponseEntity.status(HttpStatus.NO_CONTENT)
+//					.body(MensajeResponse.builder()
+//							.mensaje("No se han encontrado registros.")
+//							.objeto(listaMedicos)
+//							.build());
+//		}
 		return ResponseEntity.ok(MensajeResponse.builder()
 				.mensaje("Medicos recuperados correctamente.")
 				.objeto(listaMedicos)
