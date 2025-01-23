@@ -2,9 +2,13 @@ package clinica.model.entity;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +22,20 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
+@Table(name = "medico", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "dni"),
+		@UniqueConstraint(columnNames = "email"),
+		@UniqueConstraint(columnNames = "telefono"),
+		@UniqueConstraint(columnNames = "direccion")
+})
 public class Medico extends Persona{
+	private static final long serialVersionUID = 2L;
+	
+	@Column(nullable = false)
 	private String especialidad;
-//	private List<CitaMedica> cita_medica;
+	@Column(nullable = false)
 	private double sueldo;
+	
+	@OneToMany
+	private List<Turno> turnos_disponibles;
 }
