@@ -56,6 +56,7 @@ public class MedicoServiceImpl implements IMedicoService {
 		return mapperMedicoDTO;
 	}
 
+	@Transactional
 	@Override
 	public MedicoDTO actualizarMedico(Long id, MedicoDTO medicoDTO) {
 	    Medico medico = medicoRepository.findById(id)

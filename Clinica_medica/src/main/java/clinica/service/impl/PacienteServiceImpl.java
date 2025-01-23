@@ -4,11 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +34,7 @@ public class PacienteServiceImpl implements IPacienteService{
 		} catch (DataIntegrityViolationException ex) {
 	        throw new ApplicationException(ErrorCode.CONFLICT, 
 	                "Error de integridad de datos: existen duplicados.", ex);
-	    } catch (Exception ex) {
+		} catch (Exception ex) {
 	        throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR, 
 	                "Error interno del servidor.", ex);
 		}
@@ -57,6 +53,7 @@ public class PacienteServiceImpl implements IPacienteService{
 		return mapperPacienteDTO;
 	}
 
+	@Transactional
 	@Override
 	public PacienteDTO actualizarPaciente(Long id, PacienteDTO pacienteDTO) {
 		Paciente paciente = pacienteRepository.findById(id)
@@ -100,5 +97,4 @@ public class PacienteServiceImpl implements IPacienteService{
 				.deListaPacienteAListaPacienteDTO(listaPaciente);
 		return mapperPacientesDTO;
 	}
-
 }
