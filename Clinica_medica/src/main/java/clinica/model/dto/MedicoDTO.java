@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import clinica.model.entity.Turno;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,5 @@ public class MedicoDTO {
 	private String direccion;
 	private String especialidad;
 	private double sueldo;
-
-//	private List<Long> cita_medica;
+//	private List<Turno> turnos_disponibles;
 }
