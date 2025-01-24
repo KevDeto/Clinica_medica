@@ -22,9 +22,8 @@ public class TurnoController {
 	private ITurnoService turnoService;
 	
 	@PostMapping("horario-atencion/{medico_id}")
-	public ResponseEntity<MensajeResponse> crear(@Valid@PathVariable Long medico_id,
-			@Valid@RequestBody TurnoDTO turno){
-		TurnoDTO turnoCreado = turnoService.crearHorarioAtencion(medico_id, turno);
+	public ResponseEntity<MensajeResponse> crear(@Valid@RequestBody TurnoDTO turnoDTO){
+		TurnoDTO turnoCreado = turnoService.crearTurno(turnoDTO);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(MensajeResponse.builder()
 						.mensaje("Horario de atencion creado correctamente.")
