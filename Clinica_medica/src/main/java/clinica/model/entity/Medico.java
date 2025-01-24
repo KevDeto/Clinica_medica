@@ -2,6 +2,7 @@ package clinica.model.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -36,6 +37,6 @@ public class Medico extends Persona{
 	@Column(nullable = false)
 	private double sueldo;
 	
-	@OneToMany
-	private List<Turno> turnos_disponibles;
+	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+	private List<Turno> turnos;
 }
