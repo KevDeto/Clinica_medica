@@ -14,7 +14,6 @@ import clinica.model.entity.Paciente;
 //utilizar un mapper personalisado para que no choque entre IDs
 @Mapper(componentModel = "spring")
 public interface IPacienteMapper {
-	IPacienteMapper INSTANCE = Mappers.getMapper(IPacienteMapper.class);
 	PacienteDTO dePacienteAPacienteDTO(Paciente paciente);
 	Paciente dePacienteDTOAPaciente(PacienteDTO pacienteDTO);
 	List<PacienteDTO> deListaPacienteAListaPacienteDTO(List<Paciente> paciente);
