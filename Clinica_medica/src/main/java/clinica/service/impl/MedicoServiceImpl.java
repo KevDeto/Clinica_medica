@@ -24,16 +24,18 @@ public class MedicoServiceImpl implements IMedicoService {
 
 	@Autowired
 	private IMedicoRepository medicoRepository;
+	@Autowired
+	private IMedicoMapper medicoMapper;
 
 	@Transactional
 	@Override
 	public MedicoDTO crearMedico(MedicoDTO medicoDTO) {
 		try {
-			Medico mapperMedico = IMedicoMapper.INSTANCE.deMedicoDTOAMedico(medicoDTO);
-			medicoRepository.save(mapperMedico);
-			MedicoDTO mapperMedicoDTO = IMedicoMapper.INSTANCE.deMedicoAMedicoDTO(mapperMedico);
+			Medico medicoMapeado = medicoMapper.deMedicoDTOAMedico(medicoDTO);
+			medicoRepository.save(medicoMapeado);
+			MedicoDTO medicoDtoMapeado = medicoMapper.deMedicoAMedicoDTO(medicoMapeado);
 			
-			return mapperMedicoDTO;
+			return medicoDtoMapeado;
 	    } catch (DataIntegrityViolationException ex) {
 	        throw new ApplicationException(ErrorCode.CONFLICT, 
 	                "Error de integridad de datos: existen duplicados.", ex);
@@ -52,8 +54,8 @@ public class MedicoServiceImpl implements IMedicoService {
 					"Paciente con ID " + id + " no existe.", null);
 		}
 		Medico medico = medicoObtenido.get();
-		MedicoDTO mapperMedicoDTO = IMedicoMapper.INSTANCE.deMedicoAMedicoDTO(medico);
-		return mapperMedicoDTO;
+		MedicoDTO medicoDtoMapeado = medicoMapper.deMedicoAMedicoDTO(medico);
+		return medicoDtoMapeado;
 	}
 
 	@Transactional
@@ -64,10 +66,10 @@ public class MedicoServiceImpl implements IMedicoService {
 	                    "Medico con ID " + id + " no encontrado.", null));
 		try {
 			medicoDTO.setId(id);
-			IMedicoMapper.INSTANCE.actualizarMedicoDesdeDTO(medico, medicoDTO);
+			medicoMapper.actualizarMedicoDesdeDTO(medico, medicoDTO);
 			medicoRepository.save(medico);
-			MedicoDTO mapperMedicoDTO = IMedicoMapper.INSTANCE.deMedicoAMedicoDTO(medico);
-			return mapperMedicoDTO;
+			MedicoDTO medicoDtoMapeado = medicoMapper.deMedicoAMedicoDTO(medico);
+			return medicoDtoMapeado;
 	    } catch (DataIntegrityViolationException ex) {
 	        throw new ApplicationException(ErrorCode.CONFLICT, 
 	                "Error de integridad de datos: existen duplicados.", ex);
@@ -95,9 +97,9 @@ public class MedicoServiceImpl implements IMedicoService {
 	@Override
 	public List<MedicoDTO> listarMedicos() {
 		List<Medico> listaMedicos = medicoRepository.findAll();
-		List<MedicoDTO> mapperListaMedicosDTO = IMedicoMapper.INSTANCE
+		List<MedicoDTO> listaMedicoDtoMapeado = medicoMapper
 				.deListaMedicoAListaMedicoDTO(listaMedicos);
-		return mapperListaMedicosDTO;
+		return listaMedicoDtoMapeado;
 	}
 
 }
