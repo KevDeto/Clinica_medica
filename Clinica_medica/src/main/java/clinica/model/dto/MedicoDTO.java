@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import clinica.model.entity.Turno;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class MedicoDTO {
-	@JsonIgnore
+	@Schema(example = "0")
 	private Long id;
 	private String nombre;
 	private String apellido;
@@ -25,5 +26,5 @@ public class MedicoDTO {
 	private String direccion;
 	private String especialidad;
 	private double sueldo;
-//	private List<Turno> turnos_disponibles;
+	private List<Turno> turnos;
 }
