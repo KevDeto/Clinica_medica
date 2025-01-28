@@ -21,7 +21,7 @@ public class DatabaseInitializer {
 	public void initializeDatabase() {
 		try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
 
-			String alterQuery = "ALTER TABLE turno_disponible " + "MODIFY COLUMN hora_inicio TIME(0), "
+			String alterQuery = "ALTER TABLE turno " + "MODIFY COLUMN hora_inicio TIME(0), "
 					+ "MODIFY COLUMN hora_fin TIME(0)";
 			statement.execute(alterQuery);
 		} catch (SQLException ex) {
