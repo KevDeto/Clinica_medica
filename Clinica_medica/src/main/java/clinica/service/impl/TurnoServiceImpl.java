@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import clinica.exceptions.ApplicationException;
 import clinica.exceptions.ErrorCode;
 
-import clinica.model.dao.IMedicoRepository;
 import clinica.model.dao.ITurnoRepository;
 import clinica.model.dto.TurnoDTO;
-import clinica.model.entity.Medico;
 import clinica.model.entity.Turno;
 import clinica.model.mapper.ITurnoMapper;
 
@@ -26,8 +24,6 @@ public class TurnoServiceImpl implements ITurnoService{
 	
 	@Autowired
 	private ITurnoRepository turnoRepository;
-//	@Autowired
-//	private IMedicoRepository medicoRepository;
     @Autowired
     private ITurnoMapper turnoMapper;
 
@@ -38,13 +34,16 @@ public class TurnoServiceImpl implements ITurnoService{
 	        throw new ApplicationException(ErrorCode.BAD_REQUEST,
 	        		"La hora de inicio no puede ser después de la hora de fin", null);
 	    }
-//	    if(medicoRepository.existsById(turnoDTO.getMedico_id())) {
-//	    	throw new ApplicationException(ErrorCode.NOT_FOUND,
-//            		"El medico con ID " + turnoDTO.getMedico_id() + " no existe.", null);
-//	    }
+	    if (turnoDTO.getMedico_id() == null) {
+	        throw new ApplicationException(ErrorCode.BAD_REQUEST, 
+	                "El ID del médico no puede ser nulo", null);
+	    }
 	    try {
 	        Turno turnoMapeado = turnoMapper.deTurnoDTOATurno(turnoDTO);
 	        return turnoMapper.deTurnoATurnoDTO(turnoRepository.save(turnoMapeado));
+	    } catch (DataIntegrityViolationException ex) {
+	        throw new ApplicationException(ErrorCode.NOT_FOUND, 
+	                "El médico con el ID proporcionado no existe", ex);
 	    }catch(Exception ex) {
 	        throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR, 
 	                "Error desconocido al guardar el turno disponible.", ex);
@@ -70,11 +69,6 @@ public class TurnoServiceImpl implements ITurnoService{
 		Turno turno = turnoRepository.findById(id)
 				.orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
 						"Turno con ID " + id + " no existe.", null));
-	    
-//		if(medicoRepository.existsById(turnoDTO.getMedico_id())) {
-//	    	throw new ApplicationException(ErrorCode.NOT_FOUND,
-//            		"El medico con ID " + turnoDTO.getMedico_id() + " no existe.", null);
-//	    }
 		try {
 			turno.setId(id);
 			turnoMapper.actualizarDeTurnoATurnoDTO(turno, turnoDTO);
@@ -95,12 +89,12 @@ public class TurnoServiceImpl implements ITurnoService{
 			throw new ApplicationException(ErrorCode.NOT_FOUND,
 					"Turno con ID " + id + " no existe.", null);
 		}
+		turnoRepository.deleteById(id);
 	}
 
 	@Override
 	public List<TurnoDTO> listaTurnos() {
 		List<Turno> listaTurnos = turnoRepository.findAll();
-	
 		return listaTurnos.stream()
 				.map(turnoMapper::deTurnoATurnoDTO)
 				.collect(Collectors.toList());
