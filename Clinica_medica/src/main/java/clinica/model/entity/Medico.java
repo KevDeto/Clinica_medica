@@ -23,12 +23,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "medico", uniqueConstraints = {
+@Table(name = "medico"/*, uniqueConstraints = {
 		@UniqueConstraint(columnNames = "dni"),
 		@UniqueConstraint(columnNames = "email"),
 		@UniqueConstraint(columnNames = "telefono"),
 		@UniqueConstraint(columnNames = "direccion")
-})
+}*/)
 public class Medico extends Persona{
 	private static final long serialVersionUID = 2L;
 	
