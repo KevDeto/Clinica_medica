@@ -25,7 +25,7 @@ public class DatabaseInitializer {
 					+ "MODIFY COLUMN hora_fin TIME(0)";
 			statement.execute(alterQuery);
 		} catch (SQLException ex) {
-			throw new RuntimeException("Error ejecutando consulta SQL para modificar la tabla 'turno_disponible'", ex);
+			throw new RuntimeException("Error ejecutando consulta SQL para modificar la tabla 'turno'", ex);
 		}
 	}
 }
