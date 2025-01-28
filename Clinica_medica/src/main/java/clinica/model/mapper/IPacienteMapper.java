@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
 import clinica.model.dto.MedicoDTO;
 import clinica.model.dto.PacienteDTO;
