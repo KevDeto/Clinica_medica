@@ -2,6 +2,7 @@ package clinica.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.catalina.mapper.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -31,6 +32,7 @@ public class MedicoServiceImpl implements IMedicoService {
 	@Override
 	public MedicoDTO crearMedico(MedicoDTO medicoDTO) {
 		try {
+			
 			Medico medicoMapeado = medicoMapper.deMedicoDTOAMedico(medicoDTO);
 			medicoRepository.save(medicoMapeado);
 			MedicoDTO medicoDtoMapeado = medicoMapper.deMedicoAMedicoDTO(medicoMapeado);
@@ -66,7 +68,7 @@ public class MedicoServiceImpl implements IMedicoService {
 	                    "Medico con ID " + id + " no encontrado.", null));
 		try {
 			medicoDTO.setId(id);
-			medicoMapper.actualizarMedicoDesdeDTO(medico, medicoDTO);
+			medicoMapper.actualizarDeMedicoAMedicoDTO(medico, medicoDTO);
 			medicoRepository.save(medico);
 			MedicoDTO medicoDtoMapeado = medicoMapper.deMedicoAMedicoDTO(medico);
 			return medicoDtoMapeado;
@@ -97,9 +99,8 @@ public class MedicoServiceImpl implements IMedicoService {
 	@Override
 	public List<MedicoDTO> listarMedicos() {
 		List<Medico> listaMedicos = medicoRepository.findAll();
-		List<MedicoDTO> listaMedicoDtoMapeado = medicoMapper
-				.deListaMedicoAListaMedicoDTO(listaMedicos);
-		return listaMedicoDtoMapeado;
+        return listaMedicos.stream()
+                .map(medicoMapper::deMedicoAMedicoDTO)
+                .collect(Collectors.toList());
 	}
-
 }
