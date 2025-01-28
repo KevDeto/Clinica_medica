@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "turno_disponible")
+@Table(name = "turno")
 public class Turno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
