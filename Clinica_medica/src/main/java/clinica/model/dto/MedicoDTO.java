@@ -26,5 +26,5 @@ public class MedicoDTO {
 	private String direccion;
 	private String especialidad;
 	private double sueldo;
-	private List<Turno> turnos;
+	private List<TurnoDTO> turnos;
 }
