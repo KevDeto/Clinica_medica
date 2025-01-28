@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TurnoDTO implements Serializable{
-	@JsonIgnore
+//	@JsonIgnore
     private Long id;
     private DiaDeSemana dia;
     @Schema(example = "08:00:00")
