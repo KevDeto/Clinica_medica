@@ -9,6 +9,5 @@ public interface IMedicoService {
 	MedicoDTO obtenerMedico(Long id);
 	MedicoDTO actualizarMedico(Long id, MedicoDTO medicoDTO);
 	void eliminarMedico(Long id);
-	boolean existeMedicoPorId(Long id);
 	List<MedicoDTO> listarMedicos();
 }
