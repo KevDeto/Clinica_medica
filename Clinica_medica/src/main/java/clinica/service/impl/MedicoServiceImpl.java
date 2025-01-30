@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import clinica.exceptions.ApplicationException;
 import clinica.exceptions.ErrorCode;
+
 import clinica.model.dao.IMedicoRepository;
 import clinica.model.dto.MedicoDTO;
 import clinica.model.entity.Medico;
 import clinica.model.mapper.IMedicoMapper;
+
 import clinica.service.IMedicoService;
 
 @Service

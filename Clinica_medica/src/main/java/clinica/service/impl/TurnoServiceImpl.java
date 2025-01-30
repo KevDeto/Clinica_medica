@@ -30,11 +30,11 @@ public class TurnoServiceImpl implements ITurnoService{
     @Transactional
 	@Override
 	public TurnoDTO crearTurno(TurnoDTO turnoDTO) {
-	    if (turnoDTO.getHora_inicio().isAfter(turnoDTO.getHora_fin())) {
+	    if (turnoDTO.getHoraInicio().isAfter(turnoDTO.getHoraFin())) {
 	        throw new ApplicationException(ErrorCode.BAD_REQUEST,
 	        		"La hora de inicio no puede ser después de la hora de fin", null);
 	    }
-	    if (turnoDTO.getMedico_id() == null) {
+	    if (turnoDTO.getMedicoId() == null) {
 	        throw new ApplicationException(ErrorCode.BAD_REQUEST, 
 	                "El ID del médico no puede ser nulo", null);
 	    }
