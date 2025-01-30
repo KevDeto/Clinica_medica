@@ -17,6 +17,7 @@ import clinica.model.entity.Turno;
 public interface IMedicoMapper {
     @Mapping(target = "turnos", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "citasMedicas", ignore = true)
     Medico deMedicoDTOAMedico(MedicoDTO medicoDTO);
 
     @Mapping(source = "turnos", target = "turnos", qualifiedByName = "mapTurnosToIds")
@@ -25,6 +26,7 @@ public interface IMedicoMapper {
 
     @Mapping(target = "turnos", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "citasMedicas", ignore = true)
     void actualizarDeMedicoAMedicoDTO(@MappingTarget Medico medico, MedicoDTO medicoDTO);
 
     @Named("mapTurnosToIds")
