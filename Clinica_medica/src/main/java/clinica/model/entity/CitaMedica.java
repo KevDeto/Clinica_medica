@@ -4,11 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,34 +12,32 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-@Table(name = "turno")
-public class Turno {
+@Table(name = "cita_medica")
+public class CitaMedica {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private DiaDeSemana dia;
-	@Column(nullable = false)
-	private LocalTime horaInicio;
-	@Column(nullable = false)
-	private LocalTime horaFin;
+	private LocalDate fechaConsulta;
+	private LocalTime horaConsulta;
+	private double montoTotal;
+	private String pagado;
 	
+	@ManyToOne
+	@JoinColumn(name = "paciente_id", nullable = false)
+	private Paciente paciente;
 	@ManyToOne
 	@JoinColumn(name = "medico_id", nullable = false)
 	private Medico medico;
 	
-	@OneToMany(mappedBy = "turno", cascade = CascadeType.ALL)
-	private List<CitaMedica> citasMedicas;
+	@ManyToOne
+	@JoinColumn(name = "turno_id", nullable = false)
+	private Turno turno;
 }

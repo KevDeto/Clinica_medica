@@ -39,4 +39,7 @@ public class Medico extends Persona{
 	
 	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
 	private List<Turno> turnos;
+	
+	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+	private List<CitaMedica> citasMedicas;
 }

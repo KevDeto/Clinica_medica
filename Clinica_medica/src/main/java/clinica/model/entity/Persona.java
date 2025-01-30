@@ -33,7 +33,7 @@ public class Persona implements Serializable{
 //	@Column(nullable = false, unique = true)
 	private String dni;
 //	@Column(nullable = false)
-	private LocalDate fecha_nac;
+	private LocalDate fechaNac;
 //	@Email
 //	@Column(nullable = false, unique = true)
 	private String email;
