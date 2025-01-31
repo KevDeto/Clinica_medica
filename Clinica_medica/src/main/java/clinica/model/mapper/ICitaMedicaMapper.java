@@ -12,7 +12,7 @@ import clinica.model.entity.Paciente;
 import clinica.model.entity.Turno;
 
 @Mapper(componentModel = "spring")
-public interface ICitaMedicaMapper {
+public interface ICitaMedicaMapper {//debo ignorar los ids de medico,paciente,turno, solo modifica lo demas
     @Mapping(source = "pacienteId", target = "paciente.id")
     @Mapping(source = "medicoId", target = "medico.id")
     @Mapping(source = "turnoId", target = "turno.id")

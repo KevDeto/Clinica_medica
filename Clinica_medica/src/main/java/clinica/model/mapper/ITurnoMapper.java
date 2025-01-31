@@ -14,7 +14,7 @@ import clinica.model.entity.CitaMedica;
 import clinica.model.entity.Turno;
 
 @Mapper(componentModel = "spring")
-public interface ITurnoMapper {
+public interface ITurnoMapper {//al actualizar debo ignorar el id de medico en el DTO
     @Mapping(source = "medicoId", target = "medico.id")
     @Mapping(target = "citasMedicas", ignore = true)
     @Mapping(target = "dia", source = "diaTurno")

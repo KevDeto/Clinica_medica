@@ -19,6 +19,7 @@ import clinica.model.entity.Paciente;
 
 @Mapper(componentModel = "spring")
 public interface IPacienteMapper {//debo ignorar el id
+	@Mapping(target = "citasMedicas", ignore = true)
     @Mapping(target = "id", ignore = true)
     Paciente dePacienteDTOAPaciente(PacienteDTO pacienteDTO);
 
