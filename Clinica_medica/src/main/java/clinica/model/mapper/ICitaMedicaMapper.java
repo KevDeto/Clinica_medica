@@ -25,9 +25,9 @@ public interface ICitaMedicaMapper {//debo ignorar los ids de medico,paciente,tu
     @Mapping(source = "id", target = "id")
     CitaMedicaDTO deCitaMedicaACitaMedicaDTO(CitaMedica citaMedica);
 
-    @Mapping(source = "pacienteId", target = "paciente.id")
-    @Mapping(source = "medicoId", target = "medico.id")
-    @Mapping(source = "turnoId", target = "turno.id")
+    @Mapping(target = "paciente.id", ignore = true)
+    @Mapping(target = "medico.id", ignore = true)
+	@Mapping(target = "turno.id", ignore = true)
     @Mapping(target = "id", ignore = true)
     void actualizarDeCitaMedicaACitaMedicaDTO(@MappingTarget CitaMedica citaMedica, CitaMedicaDTO citaMedicaDTO);
     
