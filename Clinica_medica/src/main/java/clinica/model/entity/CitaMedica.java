@@ -40,4 +40,12 @@ public class CitaMedica {
 	@ManyToOne
 	@JoinColumn(name = "turno_id", nullable = false)
 	private Turno turno;
+	
+	@ManyToOne
+	@JoinColumn(name = "servicio_id", nullable = false)
+	private ServicioMedico servicio;
+	
+	@ManyToOne
+	@JoinColumn(name = "paquete_id", nullable = false)
+	private PaqueteServicio paquete;
 }
