@@ -1,5 +1,10 @@
 package clinica.service.impl;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,5 +103,58 @@ public class TurnoServiceImpl implements ITurnoService{
 		return listaTurnos.stream()
 				.map(turnoMapper::deTurnoATurnoDTO)
 				.collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<LocalDate> obtenerTurnosDelMes(Long medicoId, int anio, int mes) {
+	    validarParametros(anio, mes);
+
+	    List<Turno> turnos = obtenerTurnosDeMedico(medicoId);
+	    return generarFechasDisponibles(turnos, anio, mes);
+	}
+	
+	private void validarParametros(int anio, int mes) {
+	    int anioActual = LocalDate.now().getYear();
+
+	    if (anio < anioActual || anio > anioActual + 1) {
+	        throw new ApplicationException(ErrorCode.BAD_REQUEST, 
+	            "El año debe estar entre " + anioActual + " y " + (anioActual + 1) + ".", null);
+	    }
+	    if (anio < 1 || mes > 12) {
+	        throw new ApplicationException(ErrorCode.BAD_REQUEST,"El mes debe estar entre 1 y 12.",null);
+	    }
+	}
+
+	private List<Turno> obtenerTurnosDeMedico(Long medicoId) {
+	    List<Turno> turnos = turnoRepository.findByMedicoId(medicoId);
+	    if (turnos.isEmpty()) {
+	        throw new ApplicationException(ErrorCode.NOT_FOUND,
+	        		"El medico no tiene turnos asignados.", null);
+	    }
+	    return turnos;
+	}
+
+	private List<LocalDate> generarFechasDisponibles(List<Turno> turnos, int anio, int mes) {
+	    List<LocalDate> fechasDisponibles = new ArrayList<>();
+	    YearMonth yearMonth = YearMonth.of(anio, mes);
+	    LocalDate startDate = yearMonth.atDay(1);
+	    LocalDate endDate = yearMonth.atEndOfMonth();
+
+	    for (Turno turno : turnos) {
+	        try {
+	            DayOfWeek diaTurno = DayOfWeek.valueOf(turno.getDia().name());
+	            LocalDate fecha = startDate.with(TemporalAdjusters.nextOrSame(diaTurno));
+
+	            while (!fecha.isAfter(endDate)) {
+	                fechasDisponibles.add(fecha);
+	                fecha = fecha.plusWeeks(1);
+	            }
+	        } catch (Exception ex) {
+	            throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR,
+	            		"Día de la semana inválido en el turno: " + turno.getDia(), ex);
+	        }
+	    }
+
+	    return fechasDisponibles;
 	}
 }
