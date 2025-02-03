@@ -12,5 +12,5 @@ import clinica.model.entity.Turno;
 
 @Repository
 public interface ITurnoRepository extends JpaRepository<Turno, Long>{
-//    List<Turno> findByMedicoId(Long medicoId);
+    List<Turno> findByMedicoId(Long medicoId);
 }
