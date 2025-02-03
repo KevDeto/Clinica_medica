@@ -29,6 +29,7 @@ public class CitaMedicaServiceImpl implements ICitaMedicaService{
 	
 	@Override
 	public CitaMedicaDTO crearCitaMedica(CitaMedicaDTO citaMedicaDTO) {
+		validarServicioOPaquete(citaMedicaDTO);
 		try {
 			CitaMedica citaMedicaMapeado = citaMedicaMapper.deCitaMedicaDTOACitaMedica(citaMedicaDTO);
 			citaMedicaRepository.save(citaMedicaMapeado);
@@ -91,4 +92,18 @@ public class CitaMedicaServiceImpl implements ICitaMedicaService{
 				.collect(Collectors.toList());
 	}
 
+    private void validarServicioOPaquete(CitaMedicaDTO citaMedicaDTO) {
+        boolean tieneServicio = citaMedicaDTO.getServicioId() != null && citaMedicaDTO.getServicioId() != 0;
+        boolean tienePaquete = citaMedicaDTO.getPaqueteId() != null && citaMedicaDTO.getPaqueteId() != 0;
+
+        if (tieneServicio && tienePaquete) {
+            throw new ApplicationException(ErrorCode.BAD_REQUEST,
+            		"No se puede registrar una cita medica con un servicio y un paquete al mismo tiempo.", null);
+        }
+
+        if (!tieneServicio && !tienePaquete) {
+            throw new ApplicationException(ErrorCode.BAD_REQUEST,
+            		"Debe asociar un servicio o un paquete a la cita médica.", null);
+        }
+    }
 }
