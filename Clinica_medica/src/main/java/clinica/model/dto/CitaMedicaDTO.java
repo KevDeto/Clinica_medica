@@ -22,4 +22,6 @@ public class CitaMedicaDTO {
 	private Long pacienteId;
 	private Long medicoId;
 	private Long turnoId;
+	private Long paqueteId;
+	private Long servicioId;
 }

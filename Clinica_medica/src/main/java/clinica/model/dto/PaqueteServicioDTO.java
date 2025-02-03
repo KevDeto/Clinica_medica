@@ -10,5 +10,5 @@ import lombok.Data;
 public class PaqueteServicioDTO {
 	private Long codigoPaquete;
 	private double precio;
-	private List<ServicioMedicoDTO> listaServicios;
+	private List<Long> listaServicios;
 }

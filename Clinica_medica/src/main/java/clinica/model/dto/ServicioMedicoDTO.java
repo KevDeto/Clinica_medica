@@ -1,5 +1,7 @@
 package clinica.model.dto;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,4 +12,5 @@ public class ServicioMedicoDTO {
 	private String nombre;
 	private String descripcion;
 	private double precio;
+
 }
