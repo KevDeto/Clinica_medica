@@ -32,6 +32,6 @@ public class ServicioMedico {
 	@ManyToMany(mappedBy = "listaServicios", cascade = CascadeType.ALL)
 	private List<PaqueteServicio> listaPaquetes;
 
-	@OneToMany(mappedBy = "citaMedica", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
 	private List<CitaMedica> citaMedica;
 }
