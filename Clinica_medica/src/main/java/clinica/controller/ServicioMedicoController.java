@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class ServicioMedicoController {
 	@Autowired
 	private IServicioMedicoService servicioMedicoService;
 	
-	@GetMapping("/servicio")
+	@PostMapping("/servicio")
 	public ResponseEntity<MensajeResponse> crear(@Valid@RequestBody ServicioMedicoDTO servicioMedicoDTO){
 		ServicioMedicoDTO servicioMedico = servicioMedicoService.crearServicioMedico(servicioMedicoDTO);
 		return ResponseEntity.status(HttpStatus.CREATED)
