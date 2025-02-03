@@ -1,5 +1,6 @@
 package clinica.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import clinica.model.dto.PacienteDTO;
@@ -70,4 +72,17 @@ public class TurnoController {
 				.objeto(listaTurnos)
 				.build());
 	}
+	
+    @GetMapping("/turnos/{medicoId}")
+    public ResponseEntity<MensajeResponse> obtenerTurnosDelMes(
+            @PathVariable Long medicoId,
+            @RequestParam int anio,
+            @RequestParam int mes) {
+        
+        List<LocalDate> fechas = turnoService.obtenerTurnosDelMes(medicoId, anio, mes);
+        return ResponseEntity.ok(MensajeResponse.builder()
+        		.mensaje("Turnos disponibles recuperados correctamente.")
+        		.objeto(fechas)
+        		.build());
+    }
 }
