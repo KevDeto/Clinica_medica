@@ -15,7 +15,7 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 + **MySQL**: base de datos relacional
 
 **Funcionalidades principales**:
-+ Gestión de pacientes, médicos, servicios médicos y paquetes de servicios
++ Gestión de pacientes, médicos, turnos, citas medicas, servicios médicos y paquetes de servicios
 + Creación y administración de consultas médicas
 + Aplicación de descuentos en paquetes y para pacientes con seguro médico
 + Cálculo de ganancias diarias y mensuales (BONUS)
