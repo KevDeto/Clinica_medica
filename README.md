@@ -26,3 +26,11 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 + Implementar seguridad con Spring Security y JWT
 + Generación de facturas en PDF
 + Tests unitarios e integración con JUnit y Mockito
+
+- clonar el repositorio:
+
+  `git clone <URL_DEL_REPOSITORIO>`
+
+- Acceder a Swagger para probar la API:
+
+  `http://localhost:8092/swagger-ui.html`
