@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import clinica.security.dao.IUserRepository;
@@ -20,15 +22,15 @@ import clinica.security.entity.UserEntity;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	private IUserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	@PostMapping("/user")
+	//DEBO REDIRIGIR EL LOGIN A MI SWAGGER O DONDE QUIERA (UNA VEZ LOGUEADO9)
+	@PostMapping("/crear")
 	public ResponseEntity<?> crearUsuario(@Valid @RequestBody UserDTO userDTO){
 		Set<RolEntity> roles = userDTO.getRoles().stream()
 				.map(rol -> RolEntity.builder()
@@ -45,5 +47,11 @@ public class UserController {
 		userRepository.save(userEntity);
 		
 		return ResponseEntity.ok(userEntity);
+	}
+	
+	@DeleteMapping("/delete")
+	public String deleteUser(@RequestParam String id) {
+		userRepository.deleteById(Long.parseLong(id));
+		return "se elimino correctamente al usuario: ".concat(id);
 	}
 }
