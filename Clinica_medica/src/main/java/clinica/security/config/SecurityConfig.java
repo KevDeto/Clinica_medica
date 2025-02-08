@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,16 +16,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import clinica.security.jwt.JwtAuthenticationFilter;
 import clinica.security.jwt.JwtAuthorizationFilter;
 import clinica.security.jwt.JwtUtils;
-import clinica.security.service.UserDetailsServiceImpl;
-import lombok.RequiredArgsConstructor;
 
 @Configuration
-@RequiredArgsConstructor
 public class SecurityConfig {
-	
 	private JwtUtils jwtUtils;
 	private  JwtAuthorizationFilter jwtAuthorizationFilter;
 	
+	
+	public SecurityConfig(JwtUtils jwtUtils, JwtAuthorizationFilter jwtAuthorizationFilter) {
+		this.jwtUtils = jwtUtils;
+		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+	}
+	
+	//la sugerencia me dice que puede ser un metodo que sea visible en todo el paquete
+	//es decir, no debe llevar ni default, ni private, ni public, ni protected
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
 			AuthenticationManager authenticationManager) throws Exception {
@@ -34,12 +39,10 @@ public class SecurityConfig {
 		
 		return httpSecurity.csrf(auth -> auth.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/v1/index2").permitAll()
-//						.requestMatchers("/accesoAdmin").hasRole("ADMIN")
+						.requestMatchers("/user/crear").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(session -> session
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//				.httpBasic(auth -> {})
 				.addFilter(jwtAuthenticationFilter) //primero valida el token
 				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
@@ -47,7 +50,7 @@ public class SecurityConfig {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(); // es muy dificl de desencriptar para hackers
+		return new BCryptPasswordEncoder(); // es mas dificl de desencriptar para hackers
 	}
 
 	@Bean
