@@ -22,7 +22,7 @@ import clinica.security.entity.UserEntity;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1")
 public class UserController {
 	
 	@Autowired
@@ -30,7 +30,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	//DEBO REDIRIGIR EL LOGIN A MI SWAGGER O DONDE QUIERA (UNA VEZ LOGUEADO9)
-	@PostMapping("/crear")
+	@PostMapping("/user")
 	public ResponseEntity<?> crearUsuario(@Valid @RequestBody UserDTO userDTO){
 		Set<RolEntity> roles = userDTO.getRoles().stream()
 				.map(rol -> RolEntity.builder()
