@@ -64,7 +64,18 @@ public class JwtAuthenticationFilter  extends UsernamePasswordAuthenticationFilt
 		//obtenemos los datos del usuario (esta clase es de spring framework, por eso se nombro UserEntity)
 		User user = (User)authResult.getPrincipal();
 		//generamos el token de acceso para dar autorizacion a los endpoints
-		String token = jwtUtils.generarToken(user.getUsername());
+//		String token = jwtUtils.generarToken(user.getUsername());
+		
+        String token;
+
+        // Verificar si el usuario seleccionó "Recordar durante 30 días"
+        boolean recordar = Boolean.parseBoolean(request.getParameter("recordar"));
+        if (recordar) {
+            token = jwtUtils.generarToken(user.getUsername(), 30 * 24 * 60 * 60 * 1000L); // 30 días
+        } else {
+            token = jwtUtils.generarToken(user.getUsername());
+        }
+        
 		//respondemos con el token de acceso
 		response.addHeader("Authorization", token);
 		//respondemos en el cuerpo de la respuesto
