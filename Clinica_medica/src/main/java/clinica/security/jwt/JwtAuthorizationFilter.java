@@ -43,6 +43,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 						userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 
+	            // Renovar el token si está próximo a expirar
+	            String newToken = jwtUtils.renovarTokenSiProximoAExpirar(token);
+	            if (!newToken.equals(token)) {
+	                response.setHeader("New-Token", newToken); // Enviar el nuevo token al cliente
+	            }
 			}
 		}
 		filterChain.doFilter(request, response);
