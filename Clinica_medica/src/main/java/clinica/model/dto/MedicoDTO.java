@@ -3,20 +3,13 @@ package clinica.model.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import clinica.model.entity.Turno;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 public class MedicoDTO {
-	private Long id;
+	private Long codigoMedico;
 	private String nombre;
 	private String apellido;
 	private String dni;

@@ -2,17 +2,13 @@ package clinica.model.dto;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 public class PacienteDTO {
-	private Long id;
+	private Long codigoPaciente;
 	private String nombre;
 	private String apellido;
 	private String dni;
