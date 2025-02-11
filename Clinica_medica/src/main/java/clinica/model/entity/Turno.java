@@ -1,6 +1,5 @@
 package clinica.model.entity;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -18,26 +17,25 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-@Table(name = "turno")
+@Table(name = "turnos")
 public class Turno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(nullable = false)
+	@Column(name = "id")
+	private Long codigoTurno;
 	@Enumerated(EnumType.STRING)
-	private DiaDeSemana dia;
-	@Column(nullable = false)
+	@Column(name = "dia", nullable = false)
+	private DiaDeSemana diaTurno;
+	@Column(name = "hora_inicio", nullable = false)
 	private LocalTime horaInicio;
-	@Column(nullable = false)
+	@Column(name = "hora_fin", nullable = false)
 	private LocalTime horaFin;
 	
 	@ManyToOne

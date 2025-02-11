@@ -2,16 +2,16 @@ package clinica.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,14 +20,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cita_medica")
+@Table(name = "citas_medicas")
 public class CitaMedica {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "id")
+	private Long codigoCitaMedica;
+	@Column(name = "fecha_consulta")
 	private LocalDate fechaConsulta;
+	@Column(name = "hora_consulta")
 	private LocalTime horaConsulta;
+	@Column(name = "monto_total")
 	private double montoTotal;
+	@Column(name = "pagado")
 	private String pagado;
 	
 	@ManyToOne
