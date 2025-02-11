@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MensajeResponse implements Serializable{
+	private static final long serialVersionUID = 5L;
+	
 	private String mensaje;
 	private Object objeto;
 }

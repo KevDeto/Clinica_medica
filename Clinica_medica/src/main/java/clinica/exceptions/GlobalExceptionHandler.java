@@ -3,7 +3,6 @@ package clinica.exceptions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import clinica.model.payload.MensajeResponse;
 
