@@ -15,19 +15,19 @@ import clinica.model.entity.Turno;
 
 @Mapper(componentModel = "spring")
 public interface ITurnoMapper {
-    @Mapping(source = "medicoId", target = "medico.codigoPersona")
+    @Mapping(source = "medicoId", target = "medico.id")
     @Mapping(target = "diaTurno", source = "diaTurno")
     @Mapping(target = "citasMedicas", ignore = true)
     @Mapping(target = "codigoTurno", ignore = true)
     Turno deTurnoDTOATurno(TurnoDTO turnoDTO);
 
     @Mapping(source = "citasMedicas", target = "citasMedicas", qualifiedByName = "mapCitasMedicasToIds")
-    @Mapping(source = "medico.codigoPersona", target = "medicoId")
+    @Mapping(source = "medico.id", target = "medicoId")
     @Mapping(source = "diaTurno", target = "diaTurno")
     @Mapping(source = "codigoTurno", target = "codigoTurno")
     TurnoDTO deTurnoATurnoDTO(Turno turno);
 
-    @Mapping(source = "medicoId", target = "medico.codigoPersona")
+    @Mapping(source = "medicoId", target = "medico.id")
     @Mapping(source = "diaTurno", target = "diaTurno")
     @Mapping(target = "citasMedicas", ignore = true)
     @Mapping(target = "codigoTurno", ignore = true)

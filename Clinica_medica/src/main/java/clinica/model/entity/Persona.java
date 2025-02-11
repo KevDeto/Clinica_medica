@@ -26,7 +26,7 @@ public class Persona implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long codigoPersona;
+	private Long id;
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	@Column(name = "apellido", nullable = false)

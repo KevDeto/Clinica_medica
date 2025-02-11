@@ -106,7 +106,7 @@ public class TurnoServiceImpl implements ITurnoService{
 	}
 	
 	@Override
-	public List<LocalDate> obtenerTurnosDelMes(Long medicoId, int anio, int mes) {
+	public List<LocalDate> obtenerTurnosDelMes(Long medicoId, int mes, int anio) {
 	    validarParametros(anio, mes);
 
 	    List<Turno> turnos = obtenerTurnosDeMedico(medicoId);

@@ -10,12 +10,12 @@ import clinica.model.entity.Paciente;
 @Mapper(componentModel = "spring")
 public interface IPacienteMapper {
 	@Mapping(target = "citasMedicas", ignore = true)
-    @Mapping(target = "codigoPersona", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Paciente dePacienteDTOAPaciente(PacienteDTO pacienteDTO);
 
-    @Mapping(source = "codigoPersona", target = "codigoPaciente")
+    @Mapping(source = "id", target = "codigoPaciente")
     PacienteDTO dePacienteAPacienteDTO(Paciente paciente);
     
-    @Mapping(target = "codigoPersona", ignore = true)
+    @Mapping(target = "id", ignore = true)
     void actualizarPacienteDesdeDTO(@MappingTarget Paciente paciente, PacienteDTO pacienteDTO);
 }
