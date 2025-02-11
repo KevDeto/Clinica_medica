@@ -79,7 +79,7 @@ public class TurnoController {
             @RequestParam int mes,
             @RequestParam int anio) {
         
-        List<LocalDate> fechas = turnoService.obtenerTurnosDelMes(medicoId, anio, mes);
+        List<LocalDate> fechas = turnoService.obtenerTurnosDelMes(medicoId, mes, anio);
         return ResponseEntity.ok(MensajeResponse.builder()
         		.mensaje("Turnos disponibles recuperados correctamente.")
         		.objeto(fechas)
