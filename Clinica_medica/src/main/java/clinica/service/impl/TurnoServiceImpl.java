@@ -75,7 +75,7 @@ public class TurnoServiceImpl implements ITurnoService{
 				.orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
 						"Turno con ID " + id + " no existe.", null));
 		try {
-			turno.setId(id);
+			turno.setCodigoTurno(id);
 			turnoMapper.actualizarDeTurnoATurnoDTO(turno, turnoDTO);
 			turnoRepository.save(turno);
 			return turnoMapper.deTurnoATurnoDTO(turno);
@@ -142,7 +142,7 @@ public class TurnoServiceImpl implements ITurnoService{
 
 	    for (Turno turno : turnos) {
 	        try {
-	            DayOfWeek diaTurno = DayOfWeek.valueOf(turno.getDia().name());
+	            DayOfWeek diaTurno = DayOfWeek.valueOf(turno.getDiaTurno().name());
 	            LocalDate fecha = startDate.with(TemporalAdjusters.nextOrSame(diaTurno));
 
 	            while (!fecha.isAfter(endDate)) {
@@ -151,10 +151,9 @@ public class TurnoServiceImpl implements ITurnoService{
 	            }
 	        } catch (Exception ex) {
 	            throw new ApplicationException(ErrorCode.INTERNAL_SERVER_ERROR,
-	            		"Día de la semana inválido en el turno: " + turno.getDia(), ex);
+	            		"Dia de la semana invalido en el turno: " + turno.getDiaTurno(), ex);
 	        }
 	    }
-
 	    return fechasDisponibles;
 	}
 }

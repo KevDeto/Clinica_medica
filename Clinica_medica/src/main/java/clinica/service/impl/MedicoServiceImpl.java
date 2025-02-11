@@ -66,7 +66,7 @@ public class MedicoServiceImpl implements IMedicoService {
 	            .orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
 	                    "Medico con ID " + id + " no encontrado.", null));
 		try {
-			medicoDTO.setId(id);
+			medicoDTO.setCodigoMedico(id);
 			medicoMapper.actualizarDeMedicoAMedicoDTO(medico, medicoDTO);
 			medicoRepository.save(medico);
 			MedicoDTO medicoDtoMapeado = medicoMapper.deMedicoAMedicoDTO(medico);

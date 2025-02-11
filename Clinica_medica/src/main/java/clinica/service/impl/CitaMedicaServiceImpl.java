@@ -62,7 +62,7 @@ public class CitaMedicaServiceImpl implements ICitaMedicaService{
 				.orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
 						"Cita medica con ID " + id + " no existe.", null));
 		try {
-			citaMedica.setId(id);
+			citaMedica.setCodigoCitaMedica(id);
 			citaMedicaMapper.actualizarDeCitaMedicaACitaMedicaDTO(citaMedica, citaMedicaDTO);
 			citaMedicaRepository.save(citaMedica);
 			return citaMedicaMapper.deCitaMedicaACitaMedicaDTO(citaMedica);

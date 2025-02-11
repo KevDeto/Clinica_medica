@@ -2,6 +2,7 @@ package clinica.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,6 +15,7 @@ import clinica.exceptions.ErrorCode;
 import clinica.model.dao.IPacienteRepository;
 import clinica.model.dto.PacienteDTO;
 import clinica.model.entity.Paciente;
+import clinica.model.entity.PaqueteServicio;
 import clinica.model.mapper.IPacienteMapper;
 
 import clinica.service.IPacienteService;
@@ -64,7 +66,7 @@ public class PacienteServiceImpl implements IPacienteService{
 				.orElseThrow(() -> new ApplicationException(ErrorCode.NOT_FOUND,
 						"Paciente con ID " + id + " no existe.", null));
 		try {
-			pacienteDTO.setId(id);
+			pacienteDTO.setCodigoPaciente(id);
 			pacienteMapper.actualizarPacienteDesdeDTO(paciente, pacienteDTO);
 			pacienteRepository.save(paciente);
 			return pacienteMapper.dePacienteAPacienteDTO(paciente);
@@ -87,16 +89,10 @@ public class PacienteServiceImpl implements IPacienteService{
 	}
 
 	@Override
-	public boolean existePacientePorId(Long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public List<PacienteDTO> listarPacientes() {
 		List<Paciente> listaPacientes = pacienteRepository.findAll();
-		List<PacienteDTO> listaPacienteDtoMapeado = pacienteMapper
-				.deListaPacienteAListaPacienteDTO(listaPacientes);
-		return listaPacienteDtoMapeado;
+        return listaPacientes.stream()
+                .map(pacienteMapper::dePacienteAPacienteDTO)
+                .collect(Collectors.toList());
 	}
 }
