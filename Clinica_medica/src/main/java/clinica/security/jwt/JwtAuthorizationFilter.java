@@ -36,8 +36,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 			if (jwtUtils.esTokenValido(token)) {
 				String username = jwtUtils.obtenerUsernameDeToken(token);
 				// obtiene el usuario de la base de datos, todos los permisos y va a retornar un
-				// usuario
-				// propio con todas las authorizations
+				// usuario propio con todas las authorizations
 				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null,
 						userDetails.getAuthorities());

@@ -3,6 +3,7 @@ package clinica.security.entity;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,15 +30,19 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	@Column(name = "id")
+	private Long codigoUser;
 	@Email
 	@NotBlank
 	@Size(max = 80)
+	@Column(name = "email")
 	private String email;
 	@NotBlank
 	@Size(max = 30)
+	@Column(name = "username")
 	private String username;
 	@NotBlank
+	@Column(name = "password")
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RolEntity.class, cascade = CascadeType.PERSIST)

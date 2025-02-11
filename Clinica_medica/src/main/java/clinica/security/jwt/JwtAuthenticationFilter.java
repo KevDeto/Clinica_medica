@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +17,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import clinica.security.entity.UserEntity;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,8 +63,6 @@ public class JwtAuthenticationFilter  extends UsernamePasswordAuthenticationFilt
 			Authentication authResult) throws IOException, ServletException {
 		//obtenemos los datos del usuario (esta clase es de spring framework, por eso se nombro UserEntity)
 		User user = (User)authResult.getPrincipal();
-		//generamos el token de acceso para dar autorizacion a los endpoints
-//		String token = jwtUtils.generarToken(user.getUsername());
 		
         String token;
 

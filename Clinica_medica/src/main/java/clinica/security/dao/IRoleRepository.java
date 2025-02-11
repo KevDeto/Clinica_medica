@@ -8,5 +8,4 @@ import clinica.security.entity.RolEntity;
 
 @Repository
 public interface IRoleRepository extends JpaRepository<RolEntity, Long>{
-
 }
