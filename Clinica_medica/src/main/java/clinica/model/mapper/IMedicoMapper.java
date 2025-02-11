@@ -16,16 +16,16 @@ import clinica.model.entity.Turno;
 @Mapper(componentModel = "spring")
 public interface IMedicoMapper {
     @Mapping(target = "turnos", ignore = true)
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "codigoPersona", ignore = true)
     @Mapping(target = "citasMedicas", ignore = true)
     Medico deMedicoDTOAMedico(MedicoDTO medicoDTO);
 
     @Mapping(source = "turnos", target = "turnos", qualifiedByName = "mapTurnosToIds")
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "codigoPersona", target = "codigoMedico")
     MedicoDTO deMedicoAMedicoDTO(Medico medico);
 
     @Mapping(target = "turnos", ignore = true)
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "codigoPersona", ignore = true)
     @Mapping(target = "citasMedicas", ignore = true)
     void actualizarDeMedicoAMedicoDTO(@MappingTarget Medico medico, MedicoDTO medicoDTO);
 
@@ -34,6 +34,6 @@ public interface IMedicoMapper {
         if (turnos == null) {
             return Collections.emptyList();
         }
-        return turnos.stream().map(Turno::getId).collect(Collectors.toList());
+        return turnos.stream().map(Turno::getCodigoTurno).collect(Collectors.toList());
     }
 }

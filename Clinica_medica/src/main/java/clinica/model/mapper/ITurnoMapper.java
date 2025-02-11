@@ -14,23 +14,23 @@ import clinica.model.entity.CitaMedica;
 import clinica.model.entity.Turno;
 
 @Mapper(componentModel = "spring")
-public interface ITurnoMapper {//al actualizar debo ignorar el id de medico en el DTO
-    @Mapping(source = "medicoId", target = "medico.id")
+public interface ITurnoMapper {
+    @Mapping(source = "medicoId", target = "medico.codigoPersona")
+    @Mapping(target = "diaTurno", source = "diaTurno")
     @Mapping(target = "citasMedicas", ignore = true)
-    @Mapping(target = "dia", source = "diaTurno")
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "codigoTurno", ignore = true)
     Turno deTurnoDTOATurno(TurnoDTO turnoDTO);
 
-    @Mapping(source = "medico.id", target = "medicoId")
     @Mapping(source = "citasMedicas", target = "citasMedicas", qualifiedByName = "mapCitasMedicasToIds")
-    @Mapping(source = "dia", target = "diaTurno")
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "medico.codigoPersona", target = "medicoId")
+    @Mapping(source = "diaTurno", target = "diaTurno")
+    @Mapping(source = "codigoTurno", target = "codigoTurno")
     TurnoDTO deTurnoATurnoDTO(Turno turno);
 
-    @Mapping(source = "medicoId", target = "medico.id")
+    @Mapping(source = "medicoId", target = "medico.codigoPersona")
+    @Mapping(source = "diaTurno", target = "diaTurno")
     @Mapping(target = "citasMedicas", ignore = true)
-    @Mapping(source = "diaTurno", target = "dia")
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "codigoTurno", ignore = true)
     void actualizarDeTurnoATurnoDTO(@MappingTarget Turno turno, TurnoDTO turnoDTO);
 
     @Named("mapCitasMedicasToIds")
@@ -38,6 +38,6 @@ public interface ITurnoMapper {//al actualizar debo ignorar el id de medico en e
         if (citasMedicas == null) {
             return Collections.emptyList();
         }
-        return citasMedicas.stream().map(CitaMedica::getId).collect(Collectors.toList());
+        return citasMedicas.stream().map(CitaMedica::getCodigoCitaMedica).collect(Collectors.toList());
     }
 }
