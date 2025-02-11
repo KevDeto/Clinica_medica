@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import clinica.model.dto.PacienteDTO;
 import clinica.model.dto.TurnoDTO;
 import clinica.model.payload.MensajeResponse;
 import clinica.service.ITurnoService;
+
 import jakarta.validation.Valid;
-//suponiendo que el rol es del Medico
+
 @RestController
 @RequestMapping("api/v1/")
 public class TurnoController {
@@ -29,7 +29,7 @@ public class TurnoController {
 	@Autowired
 	private ITurnoService turnoService;
 
-	@PostMapping("turno")
+	@PostMapping("/turno")
 	public ResponseEntity<MensajeResponse> crear(@Valid@RequestBody TurnoDTO turnoDTO){
 		TurnoDTO turnoCreado = turnoService.crearTurno(turnoDTO);
 		return ResponseEntity.status(HttpStatus.CREATED)
@@ -73,11 +73,11 @@ public class TurnoController {
 				.build());
 	}
 	
-    @GetMapping("/turnos/{medicoId}")
+    @GetMapping("/turnos/{medicoId}/mes/año")
     public ResponseEntity<MensajeResponse> obtenerTurnosDelMes(
             @PathVariable Long medicoId,
-            @RequestParam int anio,
-            @RequestParam int mes) {
+            @RequestParam int mes,
+            @RequestParam int anio) {
         
         List<LocalDate> fechas = turnoService.obtenerTurnosDelMes(medicoId, anio, mes);
         return ResponseEntity.ok(MensajeResponse.builder()

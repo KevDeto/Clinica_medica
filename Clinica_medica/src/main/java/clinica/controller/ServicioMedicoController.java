@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import clinica.model.dto.ServicioMedicoDTO;
 import clinica.model.payload.MensajeResponse;
 import clinica.service.IServicioMedicoService;
+
 import jakarta.validation.Valid;
 
 @RestController
