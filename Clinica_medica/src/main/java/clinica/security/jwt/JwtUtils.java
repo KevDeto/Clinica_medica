@@ -1,26 +1,30 @@
 package clinica.security.jwt;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 
 @Component
 public class JwtUtils {
-    private final SecretKey secretKey; 
-    private final long timeExpiration; //expiración en milisegundos (30 días por defecto)
-
+	@Value("${jwt.secret.key}")
+    private String secretKey; 
+    private final long timeExpiration = 30L * 24 * 60 * 60 * 1000; //expiración en milisegundos (30 días por defecto)
+    private final Key firma;
+    
     public JwtUtils() {
-        this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        this.timeExpiration = 30L * 24 * 60 * 60 * 1000;
+    	this.firma = obtenerFirma();
     }
     
     // renueva el token si está por expirar
@@ -42,7 +46,7 @@ public class JwtUtils {
 				.setSubject(username)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-				.signWith(secretKey, SignatureAlgorithm.HS256)
+				.signWith(this.firma, SignatureAlgorithm.HS256)
 				.compact();
 				
 	}
@@ -56,7 +60,7 @@ public class JwtUtils {
 	public boolean esTokenValido(String token) {
 		try {
 			Jwts.parserBuilder()
-			.setSigningKey(secretKey)
+			.setSigningKey(this.firma)
 			.build()
 			.parseClaimsJws(token)
 			.getBody();
@@ -71,7 +75,7 @@ public class JwtUtils {
 	//obtener todos los claims del token
 	public Claims extraerTodosLosParametrosClaims(String token){
 		return 	Jwts.parserBuilder()
-				.setSigningKey(secretKey)
+				.setSigningKey(this.firma)
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
@@ -86,5 +90,11 @@ public class JwtUtils {
 	//obtener el username del toke
 	public String obtenerUsernameDeToken(String token) {
 		return obtenerClaim(token, Claims::getSubject);
+	}
+	
+	//obtener firma del token
+	public Key obtenerFirma() {
+		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		return Keys.hmacShaKeyFor(keyBytes);
 	}
 }
