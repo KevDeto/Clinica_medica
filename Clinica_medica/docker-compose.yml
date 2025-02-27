@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  app_clinica:
+    image: spring-clinica-image:v1
+    container_name: spring-clinica-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - clinica_network
+    restart:
+      always
+    environment:
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
+
+  mysql:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}  
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-clinica:/var/lib/mysql               
+    networks:
+      - clinica_network
+    restart: 
+      always
+
+networks:
+  clinica_network:
+    driver: 
+      bridge
+volumes:
+  mysql-clinica:
