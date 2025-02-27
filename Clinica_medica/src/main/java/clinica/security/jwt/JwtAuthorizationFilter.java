@@ -19,13 +19,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter{
 
-	@Autowired
+//	@Autowired
 	private JwtUtils jwtUtils;
 
 	// vamos a necesitar consultar el usuario en la base de datos
-	@Autowired
+//	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
 
+	public JwtAuthorizationFilter(JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsServiceImpl) {
+		this.jwtUtils = jwtUtils;
+		this.userDetailsServiceImpl = userDetailsServiceImpl;
+	}
+	
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
 			@NonNull FilterChain filterChain) throws ServletException, IOException {
