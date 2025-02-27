@@ -15,7 +15,7 @@ import clinica.model.dto.MedicoDTO;
 import clinica.model.entity.Medico;
 import clinica.model.entity.Turno;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface IMedicoMapper {
     @Mapping(target = "turnos", ignore = true)
     @Mapping(target = "id", ignore = true)

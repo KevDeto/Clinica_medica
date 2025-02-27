@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 import clinica.model.dto.CitaMedicaDTO;
 import clinica.model.entity.CitaMedica;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface ICitaMedicaMapper {
     @Mapping(source = "pacienteId", target = "paciente.id")
     @Mapping(source = "medicoId", target = "medico.id")

@@ -16,7 +16,7 @@ import clinica.model.dto.PaqueteServicioDTO;
 import clinica.model.entity.PaqueteServicio;
 import clinica.model.entity.ServicioMedico;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface IPaqueteMapper {
     @Mapping(target = "listaServicios", source = "listaServicios", qualifiedByName = "mapServiciosToIds")
     @Mapping(target = "codigoPaquete", ignore = true)

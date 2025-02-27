@@ -13,7 +13,7 @@ import org.mapstruct.ReportingPolicy;
 import clinica.model.dto.ServicioMedicoDTO;
 import clinica.model.entity.ServicioMedico;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface IServicioMapper {
 
 //    @Mapping(target = "listaPaquetes", ignore = true) 

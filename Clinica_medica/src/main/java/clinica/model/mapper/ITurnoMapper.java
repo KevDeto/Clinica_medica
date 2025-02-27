@@ -15,7 +15,7 @@ import clinica.model.dto.TurnoDTO;
 import clinica.model.entity.CitaMedica;
 import clinica.model.entity.Turno;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface ITurnoMapper {
     @Mapping(source = "medicoId", target = "medico.id")
     @Mapping(target = "diaTurno", source = "diaTurno")
