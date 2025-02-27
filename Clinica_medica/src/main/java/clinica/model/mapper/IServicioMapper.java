@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import clinica.model.dto.ServicioMedicoDTO;
 import clinica.model.entity.ServicioMedico;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IServicioMapper {
 
 //    @Mapping(target = "listaPaquetes", ignore = true) 

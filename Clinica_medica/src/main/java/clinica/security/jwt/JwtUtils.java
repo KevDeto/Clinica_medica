@@ -18,8 +18,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtils {
-	@Value("${jwt.secret.key}")
-    private String secretKey; 
+	//@Value("${jwt.secret.key}")
+    private String secretKey = "vw2k8ddW0bWHBelfJPJp+r8nemTX3+NI4rFyPZdgwdVnlIRMn4jhR5QK1+D7lVVl"; 
     private final long timeExpiration = 30L * 24 * 60 * 60 * 1000; //expiración en milisegundos (30 días por defecto)
     private final Key firma;
     

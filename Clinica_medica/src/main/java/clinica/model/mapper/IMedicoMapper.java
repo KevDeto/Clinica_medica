@@ -8,12 +8,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import clinica.model.dto.MedicoDTO;
 import clinica.model.entity.Medico;
 import clinica.model.entity.Turno;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IMedicoMapper {
     @Mapping(target = "turnos", ignore = true)
     @Mapping(target = "id", ignore = true)

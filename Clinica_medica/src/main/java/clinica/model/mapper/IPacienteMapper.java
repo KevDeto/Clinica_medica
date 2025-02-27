@@ -3,11 +3,13 @@ package clinica.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import clinica.model.dto.PacienteDTO;
 import clinica.model.entity.Paciente;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IPacienteMapper {
 	@Mapping(target = "citasMedicas", ignore = true)
     @Mapping(target = "id", ignore = true)
