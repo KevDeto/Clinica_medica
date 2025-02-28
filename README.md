@@ -28,11 +28,14 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 + Generación de facturas en PDF
 + Tests unitarios e integración con JUnit y Mockito
 
-### **Configuración del Proyecto para Docker**:
+### **Guia de configuración del Proyecto para Docker**:
 
 Para que el proyecto funcione correctamente, es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno
 
 **Variables para MySQL**:
+
+Estas variables configuran la conexión a la base de datos MySQL.
+
 ```env
 MYSQL_DATABASE=nombre_de_la_base_de_datos
 MYSQL_USER=usuario_de_mysql
@@ -40,21 +43,35 @@ MYSQL_PASSWORD=contraseña_de_mysql
 MYSQL_ROOT_PASSWORD=contraseña_root_de_mysql
 ```
 **Variables para Spring Boot**:
+
+Estas variables son utilizadas por Spring Boot para conectarse a la base de datos.
+
 ```env
 SPRING_DATASOURCE_USERNAME=usuario_de_mysql
 SPRING_DATASOURCE_PASSWORD=contraseña_de_mysql
 SPRING_DATASOURCE_URL=jdbc:mysql://nombre_de_imagen_mysql_en_docker:3306/nombre_de_la_base_de_datos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
 ```
-**Como probar la API REST**:
+**Ejecución del Proyecto con Docker**:
 
-- Clonar el repositorio:
+- Clonar el repositorio
 
   `git clone URL_DEL_REPOSITORIO`
 
-- Ir a la siguiente URL y crear una "cuenta" con POST:
+- Navega al directorio del proyecto
+
+  `cd nombre_del_repositorio`
+
+- Construye y ejecuta los contenedores con Docker Compose
+
+  `docker-compose up --build`
+
+### **Prueba de la API REST**
+
+- Realiza una solicitud POST a la siguiente URL para crear un usuario
 
   `http://localhost:8080/api/v1/user`
-  
+
+- **Cuerpo de la solicitud (JSON):**
 ```json
 {
    "email": "cualquier_cosa@gmail.com",
@@ -63,14 +80,30 @@ SPRING_DATASOURCE_URL=jdbc:mysql://nombre_de_imagen_mysql_en_docker:3306/nombre_
    "roles": ["USER", "ADMIN"]
 }
 ```
-- Ir a la siguiente URL y loguearse con POST:
+- Realiza una solicitud POST a la siguiente URL para iniciar sesión y obtener un token JWT
 
   `http://localhost:8080/login`
-  
+
+- **Cuerpo de la solicitud (JSON)**:
 ```json
   {
     "username": "nombre_de_usuario",
     "password": "contraseña"
   }
 ```
-- Por ultimo utilizar el Token que devuelve el json para tener la autorizacion para las demas consultas HTTP.
+- Usar el token JWT
+
+El endpoint de inicio de sesión devolverá un token JWT en la respuesta. Usa este token en el encabezado Authorization de las solicitudes posteriores para acceder a los endpoints protegidos:
+
+Authorization: Bearer <token_jwt>
+
+**Nota final**:
+
+La clave secreta JWT (JWT_SECRET_KEY) es fundamental para la seguridad de la aplicación. Debe cumplir con los siguientes requisitos:
+
+- Longitud: La clave debe tener al menos 256 bits (32 caracteres en Base64).
+
+- Formato: La clave debe estar en formato Base64.
+
+Puedes generar una clave en el siguiente sitio: [https://generate-random.org/encryption-key-generator](https://generate-random.org/encryption-key-generator)
+
