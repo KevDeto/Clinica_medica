@@ -15,6 +15,7 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 + **MySQL**: base de datos relacional
 + **JWT**: para autenticar usuarios y autorizar el acceso a recursos 
 + **Spring Security**: para la seguridad de la aplicacion
++ **Docker**: para empaquetar la aplicación y sus dependencias en un contenedor facilitando asi el despliegue en diferentes entornos
 
 **Funcionalidades principales**:
 + Gestión de pacientes, médicos, túrnos, citas médicas, servicios médicos y paquetes de servicios
