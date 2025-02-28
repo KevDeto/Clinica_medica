@@ -13,6 +13,8 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 + **Spring DevTools**: recarga automática en desarrollo
 + **Springdoc OpenAPI (Swagger UI)**: documentación interactiva de la API
 + **MySQL**: base de datos relacional
++ **JWT**: para autenticar usuarios y autorizar el acceso a recursos 
++ **Spring Security**: para la seguridad de la aplicacion
 
 **Funcionalidades principales**:
 + Gestión de pacientes, médicos, túrnos, citas médicas, servicios médicos y paquetes de servicios
@@ -25,6 +27,7 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 **Mejoras futuras**:
 + Generación de facturas en PDF
 + Tests unitarios e integración con JUnit y Mockito
+
 ### **Configuración del Proyecto para Docker**:
 
 Para que el proyecto funcione correctamente, es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno
