@@ -23,14 +23,51 @@ Este proyecto es el backend de una aplicación web para la gestión de consultas
 + Arquitectura limpia y buenas prácticas de desarrollo
 
 **Mejoras futuras**:
-+ Implementar seguridad con Spring Security y JWT
 + Generación de facturas en PDF
 + Tests unitarios e integración con JUnit y Mockito
+### **Configuración del Proyecto para Docker**:
 
-- clonar el repositorio:
+Para que el proyecto funcione correctamente, es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno
 
-  `git clone <URL_DEL_REPOSITORIO>`
+**Variables para MySQL**:
+```env
+MYSQL_DATABASE=nombre_de_la_base_de_datos
+MYSQL_USER=usuario_de_mysql
+MYSQL_PASSWORD=contraseña_de_mysql
+MYSQL_ROOT_PASSWORD=contraseña_root_de_mysql
+```
+**Variables para Spring Boot**:
+```env
+SPRING_DATASOURCE_USERNAME=usuario_de_mysql
+SPRING_DATASOURCE_PASSWORD=contraseña_de_mysql
+SPRING_DATASOURCE_URL=jdbc:mysql://nombre_de_imagen_mysql_en_docker:3306/nombre_de_la_base_de_datos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+```
+**Como probar la API REST**:
 
-- Acceder a Swagger para probar la API:
+- Clonar el repositorio:
 
-  `http://localhost:8092/swagger-ui.html`
+  `git clone URL_DEL_REPOSITORIO`
+
+- Ir a la siguiente URL y crear una "cuenta" con POST:
+
+  `http://localhost:8080/api/v1/user`
+  
+```json
+{
+   "email": "cualquier_cosa@gmail.com",
+   "username": "nombre_de_usuario",
+   "password": "contraseña",
+   "roles": ["USER", "ADMIN"]
+}
+```
+- Ir a la siguiente URL y loguearse con POST:
+
+  `http://localhost:8080/login`
+  
+```json
+  {
+    "username": "nombre_de_usuario",
+    "password": "contraseña"
+  }
+```
+- Por ultimo utilizar el Token que devuelve el json para tener la autorizacion para las demas consultas HTTP.
