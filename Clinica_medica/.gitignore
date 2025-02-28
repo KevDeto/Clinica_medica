@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Ignorar archivo .env
+.env
+bin/
+
 ### STS ###
 .apt_generated
 .classpath
